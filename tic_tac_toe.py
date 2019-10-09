@@ -2,7 +2,8 @@ nums = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 player1 = 'X'
 player2 = 'O'
 tiles = {}
-wins = [[7, 8, 9], [4, 5, 6], [1, 2, 3], [7, 4, 1], [8, 5, 2], [9, 6, 3], [7, 5, 3], [1, 5, 9]]
+wins = [[7, 8, 9], [4, 5, 6], [1, 2, 3], [7, 4, 1], [8, 5, 2],
+        [9, 6, 3], [7, 5, 3], [1, 5, 9]]
 
 
 def print_v_line():
@@ -36,7 +37,6 @@ def print_board():
 
 def move_input(player):
     legit = False
-    global moves
     print_board()
     print(f"Which spot would you like to place your '{player}'?")
     while not legit:
@@ -63,6 +63,7 @@ def move_input(player):
 def win_check(player):
     for w in wins:
         if tiles[w[0]] == tiles[w[1]] == tiles[w[2]] == player:
+            print_board()
             print(f'{player}s won!')
             return True
     return False
@@ -99,12 +100,14 @@ def play_game():
     moves = 0
     while not game_over:
         move_input(player1)
+        moves +=1
         if win_check(player1):
             break
         if moves == 9:
             print("TIE!")
             break
         move_input(player2)
+        moves +=1
         if win_check(player2):
             break
     print("Play again?")

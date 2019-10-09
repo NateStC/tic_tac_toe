@@ -1,3 +1,5 @@
+import random
+
 nums = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 player1 = 'X'
 player2 = 'O'
@@ -37,24 +39,20 @@ def print_board():
 
 def move_input(player):
     legit = False
-    print_board()
-    print(f"Which spot would you like to place your '{player}'?")
     while not legit:
-        move = input()
+        print_board()
+        move = input(f"Which spot would you like to place your '{player}'?\n")
         if not move.isdigit():  # validate input is a number
             print_board()
             print("Please choose a number")
-            break
         else:
             move = int(move)
         if move not in nums:  # validate board slot
             print_board()
             print("Please choose between 1-9 available on the board")
-            break
         elif tiles[move] in ['X', 'O']:   # check if tile is available
             print_board()
             print(f'Spot {move} is already taken')
-            break
         else:
             tiles[move] = player
             legit = True
@@ -63,8 +61,6 @@ def move_input(player):
 def win_check(player):
     for w in wins:
         if tiles[w[0]] == tiles[w[1]] == tiles[w[2]] == player:
-            print_board()
-            print(f'{player}s won!')
             return True
     return False
 
@@ -94,24 +90,34 @@ def start_game():
     play_game()
 
 
+def coinFlip():
+    flip = random.randint(0, 1)
+    if flip == 0:
+        return player1
+    else:
+        return player2
+
+
 def play_game():
     reset_board()
     game_over = False
     moves = 0
+    player = coinFlip()
     while not game_over:
-        move_input(player1)
-        moves +=1
-        if win_check(player1):
+        if player == player1:  # switch turn to other player
+            player = player2
+        else:
+            player = player1
+        move_input(player)
+        moves += 1
+        if win_check(player):
+            print_board()
+            print(f'{player} won!')
             break
         if moves == 9:
             print("TIE!")
             break
-        move_input(player2)
-        moves +=1
-        if win_check(player2):
-            break
-    print("Play again?")
-    again = input()
+    again = input("Play again?\n")
     if again.lower() in ['yes', 'y', 'sure', 'why not', 'ok', 'okay']:
         play_game()
 

@@ -115,6 +115,7 @@ def play_game():
             game_over = True
         elif moves == 9:
             print("TIE!")
+            game_over = True
     again = input("Play again?\n")
     if again.lower() in ['yes', 'y', 'sure', 'why not', 'ok', 'okay']:
         play_game()

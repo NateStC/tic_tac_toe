@@ -1,6 +1,5 @@
 import random
 
-nums = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 player1 = 'X'
 player2 = 'O'
 tiles = {}
@@ -47,7 +46,7 @@ def move_input(player):
             print("Please choose a number")
         else:
             move = int(move)
-        if move not in nums:  # validate board slot
+        if move not in range(1, 10):  # validate board slot
             print_board()
             print("Please choose between 1-9 available on the board")
         elif tiles[move] in ['X', 'O']:   # check if tile is available
@@ -113,10 +112,9 @@ def play_game():
         if win_check(player):
             print_board()
             print(f'{player} won!')
-            break
-        if moves == 9:
+            game_over = True
+        elif moves == 9:
             print("TIE!")
-            break
     again = input("Play again?\n")
     if again.lower() in ['yes', 'y', 'sure', 'why not', 'ok', 'okay']:
         play_game()
